@@ -1,0 +1,55 @@
+///////////////////////////////////////////////////////////////////////////////
+// Filename: Color.ps
+///////////////////////////////////////////////////////////////////////////////
+
+/////////////
+// GLOBLAS //
+/////////////
+Texture2D shaderTexture;
+SamplerState SampleType;
+
+cbuffer LightBuffer
+{
+	float4 diffuseColor;
+	float3 lightDirection;
+	float padding;
+};
+
+//////////////
+// TYPEDEFS //
+//////////////
+struct PixelInputType
+{
+	float4 position : SV_POSITION;
+	float2 tex : TEXCOORD0;
+	float3 normal: NORMAL;
+};
+
+///////////////////////////////////////////////////////////////////////////////
+// Pixel Shader
+///////////////////////////////////////////////////////////////////////////////
+
+float4 LightPixelShader(PixelInputType input) : SV_TARGET
+{
+	float4 textureColor;
+	float3 lightDir;
+	float lightIntensity;
+	float4 color;
+
+	// Fetch a texl from a texture at texture coordinate using the sampler
+	textureColor = shaderTexture.Sample(SampleType, input.tex);
+
+	// Reverse the light direction for calculation
+	lightDir = -lightDirection;
+
+	// Calculate the amount of light
+	lightIntensity = saturate(dot(input.normal, lightDir));
+
+	// Calculate final color based on diffuse color and the amount of light
+	color = saturate(diffuseColor * lightIntensity);
+
+	// Calculate final color to mutiply the texture color
+	color = color * textureColor;
+
+	return color;
+}
