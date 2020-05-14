@@ -1,0 +1,43 @@
+///////////////////////////////////////////////////////////////////////////////
+// Filename: MultiTexture.ps
+///////////////////////////////////////////////////////////////////////////////
+
+/////////////
+// GLOBLAS //
+/////////////
+Texture2D shaderTextures[2];
+SamplerState SampleType;
+
+//////////////
+// TYPEDEFS //
+//////////////
+struct PixelInputType
+{
+	float4 position : SV_POSITION;
+	float2 tex : TEXCOORD0;
+};
+
+///////////////////////////////////////////////////////////////////////////////
+// Pixel Shader
+///////////////////////////////////////////////////////////////////////////////
+
+float4 MultiTexturePixelShader(PixelInputType input) : SV_TARGET
+{
+	float4 color1;
+	float4 color2;
+	float4 blendColor;
+
+	// Fetch the texel from a first texture at texture coordinate using the sampler
+	color1 = shaderTextures[0].Sample(SampleType, input.tex);
+
+	// Fetch the texel from a first texture at texture coordinate using the sampler
+	color2 = shaderTextures[1].Sample(SampleType, input.tex);
+
+	// Blend two colors
+	blendColor = color1 * color2 * 2.0;
+
+	// Final color
+	blendColor = saturate(blendColor);
+
+	return blendColor;
+}
