@@ -62,5 +62,10 @@ DirectX 11의 기본적인 내용에 대해 설명합니다
 * 설명: https://copynull.tistory.com/271?category=649932
 * 소스: https://github.com/daemyung/dx11_by_tutorials/tree/master/tutorial_22
 
+## 질문
+
+튜토리얼을 보시다가 이해가 되지 않는 부분이 있으시면 제 [블로그](https://blog.naver.com/dmatrix/221964038423)에 남겨주시면 답변해드리겠습니다.
+
 ## 컨트리뷰션
+
 아무런 제약이 없으며 작성되지 않은 강좌에 대한 소스를 작성하고 Pull request를 통해 기여하실 수 있습니다.
